@@ -4,6 +4,10 @@ pipeline {
         pollSCM("* * * * *")
     }
 
+    parameters {
+        booleanParam (name: "SKIP_BUILD" defaultValue: false, description: "Skip maven build stage")
+    }
+
     stages {
         stage ("Git - Checkout") {
             steps {
@@ -13,11 +17,20 @@ pipeline {
         }
 
         stage ("Build") {
+
+            // it only reduces the execution time
+            // when {
+            //     expression {
+            //         currentBuild.currentResult == null || currentBuild.currentResult == "SUCCESS"
+            //     }
+            // }
+
             when {
                 expression {
-                    currentBuild.currentResult == null || currentBuild.currentResult == "SUCCESS"
+                    return !params.SKIP_BUILD
                 }
             }
+
             steps {
                 sh "mvn package"
             }
