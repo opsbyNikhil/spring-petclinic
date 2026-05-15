@@ -13,6 +13,11 @@ pipeline {
         }
 
         stage ("Build") {
+            when {
+                expression {
+                    currentBuild.currentResult == null || currentBuild.currentResult == "SUCCESS"
+                }
+            }
             steps {
                 sh "mvn package"
             }
@@ -29,6 +34,20 @@ pipeline {
                     -Dsonar.login=$SONAR_TOKEN
                     """
                 }
+                }
+            }
+        }
+
+        stage ("Upload JAR in S3 Bucket") {
+            steps {
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'jenkins-jar-file'
+                ]]) {
+                    sh """
+                    aws s3 cp target/*.jar \
+                    s3://jenkins-jar-upload-01/build-${BUILD_NUMBER}.jar
+                    """
                 }
             }
         }
