@@ -5,7 +5,7 @@ pipeline {
     }
 
     parameters {
-        booleanParam (name: "SKIP_BUILD" defaultValue: false, description: "Skip maven build stage")
+        booleanParam (name: "SKIP_BUILD", defaultValue: false, description: "Skip maven build stage")
     }
 
     stages {
