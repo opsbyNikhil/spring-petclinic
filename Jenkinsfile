@@ -3,6 +3,7 @@ pipeline {
     triggers {
         pollSCM("* * * * *")
     }
+
     stages {
         stage ("Git - Checkout") {
             steps {
@@ -30,6 +31,15 @@ pipeline {
                 }
                 }
             }
+        }
+
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+            archiveArtifacts artifacts: 'target/surefire-reports/*.xml'
+            junit '**/target/surefire-reports/*.xml'
         }
     }
 }
