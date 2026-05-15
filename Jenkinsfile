@@ -10,5 +10,11 @@ pipeline {
                     branch: "main"
             }
         }
+
+        stage ("Build") {
+            steps {
+                sh "mvn package"
+            }
+        }
     }
 }
