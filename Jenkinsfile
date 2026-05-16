@@ -99,7 +99,7 @@ pipeline{
             trivy image \
             --scanners vuln \
             --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
-            --format template \
+            --format table \
             --template "@junit.tpl" \
             -o trivy-report.xml \
             ${image_name}:${tag_name}
