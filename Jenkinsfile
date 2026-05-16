@@ -80,20 +80,32 @@ pipeline{
         }
 
         
-    stage ('trivy report') {
-      steps {
-        sh '''
-          curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/junit.tpl -o junit.tpl
+    stage('Trivy Report') {
+        steps {
+            sh '''
+            set -e
 
-          trivy image \
+            # Avoid /tmp memory crash (IMPORTANT)
+            export TMPDIR=/var/tmp
+            export TRIVY_CACHE_DIR=/var/lib/trivy
+
+            mkdir -p /var/tmp
+            mkdir -p /var/lib/trivy
+
+            # Download template only if not exists
+            if [ ! -f junit.tpl ]; then
+            curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/junit.tpl -o junit.tpl
+            fi
+
+            trivy image \
             --scanners vuln \
             --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
             --format template \
             --template "@junit.tpl" \
             -o trivy-report.xml \
             ${image_name}:${tag_name}
-        '''
-      }
+            '''
+        }
     }
 
 
