@@ -80,7 +80,7 @@ pipeline{
         }
 
         
-    stage('Trivy Report') {
+    stage('Trivy') {
         steps {
             sh '''
             set -e
