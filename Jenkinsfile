@@ -119,9 +119,9 @@ pipeline{
             steps {
                 sh """
                     set -e
-                    aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 984912521466.dkr.ecr.ap-south-1.amazonaws.com \
-                    docker tag ${image_name}:${tag_name} 984912521466.dkr.ecr.ap-south-1.amazonaws.com/spc/image:latest \      
-                    docker image ls \
+                    aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 984912521466.dkr.ecr.ap-south-1.amazonaws.com 
+                    docker tag ${image_name}:${tag_name} 984912521466.dkr.ecr.ap-south-1.amazonaws.com/spc/image:latest 
+                    docker image ls 
                     docker push 984912521466.dkr.ecr.ap-south-1.amazonaws.com/spc/image:latest
                 """
             }
