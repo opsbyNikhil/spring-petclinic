@@ -78,6 +78,21 @@ pipeline{
                 sh "docker image build -t ${image_name}:${tag_name} ."
             }
         }
+
+        stage ("Trivy Scan") {
+            steps {
+                sh  "trivy image ${image_name}:${tag_name}"
+            }
+        }
+
+        // stage ("Docker Image push to ECR") {
+        //     steps {
+        //         sh """
+                
+                
+        //         """
+        //     }
+        // }
     }
 
     post {
