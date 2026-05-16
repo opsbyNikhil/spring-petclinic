@@ -6,7 +6,7 @@ pipeline{
     parameters{
         booleanParam(name: "Skip_Build", defaultValue: true, description: "Skip build maven"),
         booleanParam(name: "Skip_Sonar", defaultValue: true, description: "Skip sonar scan"),
-        booleanParam(name: "Skip_docker", defaultValue: true, description: "Skip docker"),
+        booleanParam(name: "Skip_docker", defaultValue: true, description: "Skip docker")
 
     }
     environment {
