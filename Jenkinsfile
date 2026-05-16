@@ -4,7 +4,10 @@ pipeline{
         pollSCM("* * * * *")
     }
     parameters{
-        booleanParam(name: "Skip_Build", defaultValue: true, description: "Skip the build maven")
+        booleanParam(name: "Skip_Build", defaultValue: true, description: "Skip build maven"),
+        booleanParam(name: "Skip_Sonar", defaultValue: true, description: "Skip sonar scan"),
+        booleanParam(name: "Skip_docker", defaultValue: true, description: "Skip docker"),
+
     }
     environment {
         image_name = "spc-1.0"
@@ -31,6 +34,11 @@ pipeline{
         }
 
         stage ("Sonar-scan") {
+            when {
+                expression {
+                    return !params.Skip_Sonar
+                }
+            }
             steps {
                 withCredentials([string(credentialsId: "SONAR_ID", variable: "SONAR_TOKEN")]){
                 withSonarQubeEnv("SONAR"){
@@ -61,6 +69,11 @@ pipeline{
         }
 
         stage ("Docker Image") {
+            when {
+                expression {
+                    return !params.Skip_docker
+                }
+            }
             steps {
                 sh "docker image build -t ${image_name}:${tag_name} ."
             }
@@ -69,8 +82,8 @@ pipeline{
 
     post {
         always {
-            archieveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-            archieveArtifacts artifacts: 'target/surefire-reports/*.xml'
+            archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+            archiveArtifacts artifacts: 'target/surefire-reports/*.xml'
             junit '**/target/surefire-reports/*.xml' 
         }
     }
