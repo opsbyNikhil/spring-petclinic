@@ -7,8 +7,8 @@ pipeline{
         booleanParam(name: "Skip_Build", defaultValue: true, description: "Skip the build maven")
     }
     environment {
-        image_name: "spc-1.0"
-        tag_name: "1.0"
+        image_name = "spc-1.0"
+        tag_name = "1.0"
     }
 
     stages {
