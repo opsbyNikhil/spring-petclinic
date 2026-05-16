@@ -54,19 +54,19 @@ pipeline{
             }
         }
 
-        stage ("Upload JAR in S3") {
-            steps {
-                withCredentials([[
-                    $class: "AmazonWebServicesCredentialsBinding",
-                    credentialsId: "Jenkins-JAR"
-                ]]) {
-                    sh """aws s3 cp target/*.jar \
-                    s3://jenkins-myjar/build-${BUILD_NUMBER}.jar
+        // stage ("Upload JAR in S3") {
+        //     steps {
+        //         withCredentials([[
+        //             $class: "AmazonWebServicesCredentialsBinding",
+        //             credentialsId: "Jenkins-JAR"
+        //         ]]) {
+        //             sh """aws s3 cp target/*.jar \
+        //             s3://jenkins-myjar/build-${BUILD_NUMBER}.jar
 
-                    """ 
-                }
-            }
-        }
+        //             """ 
+        //         }
+        //     }
+        // }
 
         stage ("Docker Image") {
             when {
@@ -118,10 +118,8 @@ pipeline{
         stage ("Docker Image push to ECR") {
             steps {
                 sh """
-                    set -e
-                    aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 984912521466.dkr.ecr.ap-south-1.amazonaws.com 
-                    docker tag ${image_name}:${tag_name} 984912521466.dkr.ecr.ap-south-1.amazonaws.com/spc/image:latest 
-                    docker image ls 
+                    aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 984912521466.dkr.ecr.ap-south-1.amazonaws.com, 
+                    docker tag ${image_name}:${tag_name} 984912521466.dkr.ecr.ap-south-1.amazonaws.com/spc/image:latest, 
                     docker push 984912521466.dkr.ecr.ap-south-1.amazonaws.com/spc/image:latest
                 """
             }
