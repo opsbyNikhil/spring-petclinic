@@ -30,7 +30,20 @@ pipeline{
                         -Dsonar.login=${SONAR_TOKEN}
                     """
                 }
+                }
+            }
+        }
 
+        stage ("Upload JAR in S3") {
+            steps {
+                withCredentails([[
+                    $class: "AmazonWebServicesCredentialsBinding",
+                    credentailsId: "Jenkins-JAR"
+                ]]) {
+                    sh """aws s3 cp target/*.jar \
+                    s3://jenkins-myjar/build-${BUILD_NUMBER}.jar
+
+                    """ 
                 }
             }
         }
