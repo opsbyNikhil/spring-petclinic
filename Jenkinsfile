@@ -71,7 +71,7 @@ pipeline{
         always {
             archieveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             archieveArtifacts artifacts: 'target/surefire-reports/*.xml'
-            junit: '**/target/surefire-reports/*.xml' 
+            junit '**/target/surefire-reports/*.xml' 
         }
     }
 }
