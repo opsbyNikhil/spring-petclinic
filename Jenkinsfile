@@ -4,11 +4,11 @@ pipeline{
         pollSCM("* * * * *")
     }
     parameters{
-        booleanParam(name: "Skip_Build", defaultValue: true, description: "Skip build maven"),
-        booleanParam(name: "Skip_Sonar", defaultValue: true, description: "Skip sonar scan"),
+        booleanParam(name: "Skip_Build", defaultValue: true, description: "Skip build maven")
+        booleanParam(name: "Skip_Sonar", defaultValue: true, description: "Skip sonar scan")
         booleanParam(name: "Skip_docker", defaultValue: true, description: "Skip docker")
-
     }
+
     environment {
         image_name = "spc-1.0"
         tag_name = "1.0"
