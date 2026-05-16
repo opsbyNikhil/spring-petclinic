@@ -6,6 +6,10 @@ pipeline{
     parameters{
         booleanParam(name: "Skip_Build", defaultValue: true, description: "Skip the build maven")
     }
+    environment {
+        image_name: "spc-1.0"
+        tag_name: "1.0"
+    }
 
     stages {
         stage ("Git-Checkout") {
@@ -53,6 +57,12 @@ pipeline{
 
                     """ 
                 }
+            }
+        }
+
+        stage ("Docker Image") {
+            steps {
+                sh "docker image build -t ${image_name}:${tag_name} ."
             }
         }
     }
