@@ -4,7 +4,7 @@ pipeline{
         pollSCM("* * * * *")
     }
     parameters{
-        booleanParam(name: "Skip_Build-MVN", defaultValue: true, description: "Skip the build maven")
+        booleanParam(name: "Skip_Build", defaultValue: true, description: "Skip the build maven")
     }
 
     stages {
@@ -18,7 +18,7 @@ pipeline{
         stage ("Build") {
             when {
                 expression {
-                    return !params.Skip_Build-MVN
+                    return !params.Skip_Build
                 }
             }
             steps {
