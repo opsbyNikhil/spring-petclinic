@@ -3,6 +3,9 @@ pipeline{
     triggers {
         pollSCM("* * * * *")
     }
+    parameters{
+        booleanParam(name: "Skip_Build-MVN", defaultvalue: true, description: "Skip the build maven")
+    }
 
     stages {
         stage ("Git-Checkout") {
@@ -13,6 +16,11 @@ pipeline{
         }
 
         stage ("Build") {
+            when {
+                expression {
+                    return !params.Skip_Build-MVN
+                }
+            }
             steps {
                 sh "mvn package"
             }
@@ -38,7 +46,7 @@ pipeline{
             steps {
                 withCredentials([[
                     $class: "AmazonWebServicesCredentialsBinding",
-                    credentailsId: "Jenkins-JAR"
+                    credentialsId: "Jenkins-JAR"
                 ]]) {
                     sh """aws s3 cp target/*.jar \
                     s3://jenkins-myjar/build-${BUILD_NUMBER}.jar
