@@ -79,11 +79,23 @@ pipeline{
             }
         }
 
-        stage ("Trivy Scan") {
-            steps {
-                sh  "trivy image ${image_name}:${tag_name}"
-            }
-        }
+        
+    stage ('trivy report') {
+      steps {
+        sh '''
+          curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/junit.tpl -o junit.tpl
+
+          trivy image \
+            --scanners vuln \
+            --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
+            --format template \
+            --template "@junit.tpl" \
+            -o trivy-report.xml \
+            ${image_name}:${tag_name}
+        '''
+      }
+    }
+
 
         // stage ("Docker Image push to ECR") {
         //     steps {
