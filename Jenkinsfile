@@ -36,7 +36,7 @@ pipeline{
 
         stage ("Upload JAR in S3") {
             steps {
-                withCredentails([[
+                withCredentials([[
                     $class: "AmazonWebServicesCredentialsBinding",
                     credentailsId: "Jenkins-JAR"
                 ]]) {
