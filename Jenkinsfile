@@ -85,14 +85,13 @@ pipeline{
             sh '''
             set -e
 
-            # Avoid /tmp memory crash (IMPORTANT)
-            export TMPDIR=/var/tmp
-            export TRIVY_CACHE_DIR=/var/lib/trivy
+            # Use Jenkins workspace (NO permission issues)
+            export TMPDIR=$WORKSPACE/tmp
+            export TRIVY_CACHE_DIR=$WORKSPACE/trivy-cache
 
-            mkdir -p /var/tmp
-            mkdir -p /var/lib/trivy
+            mkdir -p $WORKSPACE/tmp
+            mkdir -p $WORKSPACE/trivy-cache
 
-            # Download template only if not exists
             if [ ! -f junit.tpl ]; then
             curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/junit.tpl -o junit.tpl
             fi
