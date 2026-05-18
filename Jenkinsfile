@@ -80,41 +80,41 @@ pipeline{
         }
 
         
-    stage('Trivy') {
-        steps {
-            sh "docker image build -t ${image_name}:${tag_name} ."
-            
-            // sh '''
-            // set -e
+    // stage('Trivy') {
+    //     steps {
+    //         sh "docker image build -t ${image_name}:${tag_name} ."
 
-            // export TMPDIR=$WORKSPACE/tmp
-            // export TRIVY_CACHE_DIR=$WORKSPACE/trivy-cache
+    //         // sh '''
+    //         // set -e
 
-            // mkdir -p $TMPDIR
-            // mkdir -p $TRIVY_CACHE_DIR
+    //         // export TMPDIR=$WORKSPACE/tmp
+    //         // export TRIVY_CACHE_DIR=$WORKSPACE/trivy-cache
 
-            // if [ ! -f junit.tpl ]; then
-            // curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/junit.tpl -o junit.tpl
-            // fi
+    //         // mkdir -p $TMPDIR
+    //         // mkdir -p $TRIVY_CACHE_DIR
 
-            // # 1. Console output (table)
-            // trivy image \
-            // --scanners vuln \
-            // --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
-            // --format table \
-            // ${image_name}:${tag_name}
+    //         // if [ ! -f junit.tpl ]; then
+    //         // curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/junit.tpl -o junit.tpl
+    //         // fi
 
-            // # 2. JUnit report (for Jenkins)
-            // trivy image \
-            // --scanners vuln \
-            // --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
-            // --format template \
-            // --template "@junit.tpl" \
-            // -o trivy-report.xml \
-            // ${image_name}:${tag_name}
-            // '''
-        }
-    }
+    //         // # 1. Console output (table)
+    //         // trivy image \
+    //         // --scanners vuln \
+    //         // --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
+    //         // --format table \
+    //         // ${image_name}:${tag_name}
+
+    //         // # 2. JUnit report (for Jenkins)
+    //         // trivy image \
+    //         // --scanners vuln \
+    //         // --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
+    //         // --format template \
+    //         // --template "@junit.tpl" \
+    //         // -o trivy-report.xml \
+    //         // ${image_name}:${tag_name}
+    //         // '''
+    //     }
+    // }
 
 
         stage ("Docker Image push to ECR") {
