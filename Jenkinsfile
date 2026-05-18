@@ -3,11 +3,11 @@ pipeline{
     triggers {
         pollSCM("* * * * *")
     }
-    parameters{
-        booleanParam(name: "Skip_Build", defaultValue: true, description: "Skip build maven")
-        booleanParam(name: "Skip_Sonar", defaultValue: true, description: "Skip sonar scan")
-        booleanParam(name: "Skip_docker", defaultValue: true, description: "Skip docker")
-    }
+    // parameters{
+    //     booleanParam(name: "Skip_Build", defaultValue: true, description: "Skip build maven")
+    //     booleanParam(name: "Skip_Sonar", defaultValue: true, description: "Skip sonar scan")
+    //     booleanParam(name: "Skip_docker", defaultValue: true, description: "Skip docker")
+    // }
 
     environment {
         image_name = "spc-1.0"
@@ -23,22 +23,22 @@ pipeline{
         }
 
         stage ("Build") {
-            when {
-                expression {
-                    return !params.Skip_Build
-                }
-            }
+            // when {
+            //     expression {
+            //         return !params.Skip_Build
+            //     }
+            // }
             steps {
                 sh "mvn package"
             }
         }
 
         stage ("Sonar-scan") {
-            when {
-                expression {
-                    return !params.Skip_Sonar
-                }
-            }
+            // when {
+            //     expression {
+            //         return !params.Skip_Sonar
+            //     }
+            // }
             steps {
                 withCredentials([string(credentialsId: "SONAR_ID", variable: "SONAR_TOKEN")]){
                 withSonarQubeEnv("SONAR"){
@@ -54,26 +54,26 @@ pipeline{
             }
         }
 
-        // stage ("Upload JAR in S3") {
-        //     steps {
-        //         withCredentials([[
-        //             $class: "AmazonWebServicesCredentialsBinding",
-        //             credentialsId: "Jenkins-JAR"
-        //         ]]) {
-        //             sh """aws s3 cp target/*.jar \
-        //             s3://jenkins-myjar/build-${BUILD_NUMBER}.jar
+        stage ("Upload JAR in S3") {
+            steps {
+                withCredentials([[
+                    $class: "AmazonWebServicesCredentialsBinding",
+                    credentialsId: "Jenkins-JAR"
+                ]]) {
+                    sh """aws s3 cp target/*.jar \
+                    s3://jenkins-myjar/build-${BUILD_NUMBER}.jar
 
-        //             """ 
-        //         }
-        //     }
-        // }
-
-        stage ("Docker Image") {
-            when {
-                expression {
-                    return !params.Skip_docker
+                    """ 
                 }
             }
+        }
+
+        stage ("Docker Image") {
+            // when {
+            //     expression {
+            //         return !params.Skip_docker
+            //     }
+            // }
             steps {
                 sh "docker image build -t ${image_name}:${tag_name} ."
             }
@@ -125,6 +125,8 @@ pipeline{
             }
         }
     }
+
+
 
     post {
         always {
