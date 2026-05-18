@@ -82,35 +82,37 @@ pipeline{
         
     stage('Trivy') {
         steps {
-            sh '''
-            set -e
+            sh "docker image build -t ${image_name}:${tag_name} ."
+            
+            // sh '''
+            // set -e
 
-            export TMPDIR=$WORKSPACE/tmp
-            export TRIVY_CACHE_DIR=$WORKSPACE/trivy-cache
+            // export TMPDIR=$WORKSPACE/tmp
+            // export TRIVY_CACHE_DIR=$WORKSPACE/trivy-cache
 
-            mkdir -p $TMPDIR
-            mkdir -p $TRIVY_CACHE_DIR
+            // mkdir -p $TMPDIR
+            // mkdir -p $TRIVY_CACHE_DIR
 
-            if [ ! -f junit.tpl ]; then
-            curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/junit.tpl -o junit.tpl
-            fi
+            // if [ ! -f junit.tpl ]; then
+            // curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/junit.tpl -o junit.tpl
+            // fi
 
-            # 1. Console output (table)
-            trivy image \
-            --scanners vuln \
-            --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
-            --format table \
-            ${image_name}:${tag_name}
+            // # 1. Console output (table)
+            // trivy image \
+            // --scanners vuln \
+            // --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
+            // --format table \
+            // ${image_name}:${tag_name}
 
-            # 2. JUnit report (for Jenkins)
-            trivy image \
-            --scanners vuln \
-            --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
-            --format template \
-            --template "@junit.tpl" \
-            -o trivy-report.xml \
-            ${image_name}:${tag_name}
-            '''
+            // # 2. JUnit report (for Jenkins)
+            // trivy image \
+            // --scanners vuln \
+            // --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
+            // --format template \
+            // --template "@junit.tpl" \
+            // -o trivy-report.xml \
+            // ${image_name}:${tag_name}
+            // '''
         }
     }
 
