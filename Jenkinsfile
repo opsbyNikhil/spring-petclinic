@@ -71,6 +71,12 @@ pipeline{
         }
     }
 
+    stage ("Deployement in Kubernates") {
+        steps {
+            sh "kubectl apply -f deploy/."
+        }
+    }
+
     post {
         always {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true

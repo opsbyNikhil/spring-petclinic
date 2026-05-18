@@ -1,0 +1,11 @@
+apiVersion: va
+kind: Service
+metadata:
+  name: dpc-frontend-svc
+spec:
+  type: LoadBalancer
+  selector:
+    env: dev
+  ports:
+    - port: 8080
+      protocol: TCP
