@@ -69,13 +69,15 @@ pipeline{
                 """
             }
         }
+    
+        stage ("Deployement in Kubernates") {
+            steps {
+                sh "kubectl apply -f deploy/."
+            }
+        }
+
     }
 
-    stage ("Deployement in Kubernates") {
-        steps {
-            sh "kubectl apply -f deploy/."
-        }
-    }
 
     post {
         always {
