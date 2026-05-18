@@ -3,11 +3,6 @@ pipeline{
     triggers {
         pollSCM("* * * * *")
     }
-    // parameters{
-    //     booleanParam(name: "Skip_Build", defaultValue: true, description: "Skip build maven")
-    //     booleanParam(name: "Skip_Sonar", defaultValue: true, description: "Skip sonar scan")
-    //     booleanParam(name: "Skip_docker", defaultValue: true, description: "Skip docker")
-    // }
 
     environment {
         image_name = "spc-1.0"
@@ -23,22 +18,12 @@ pipeline{
         }
 
         stage ("Build") {
-            // when {
-            //     expression {
-            //         return !params.Skip_Build
-            //     }
-            // }
             steps {
                 sh "mvn package"
             }
         }
 
         stage ("Sonar-scan") {
-            // when {
-            //     expression {
-            //         return !params.Skip_Sonar
-            //     }
-            // }
             steps {
                 withCredentials([string(credentialsId: "SONAR_ID", variable: "SONAR_TOKEN")]){
                 withSonarQubeEnv("SONAR"){
@@ -69,53 +54,11 @@ pipeline{
         }
 
         stage ("Docker Image") {
-            // when {
-            //     expression {
-            //         return !params.Skip_docker
-            //     }
-            // }
+
             steps {
                 sh "docker image build -t ${image_name}:${tag_name} ."
             }
         }
-
-        
-    // stage('Trivy') {
-    //     steps {
-    //         sh "docker image build -t ${image_name}:${tag_name} ."
-
-    //         // sh '''
-    //         // set -e
-
-    //         // export TMPDIR=$WORKSPACE/tmp
-    //         // export TRIVY_CACHE_DIR=$WORKSPACE/trivy-cache
-
-    //         // mkdir -p $TMPDIR
-    //         // mkdir -p $TRIVY_CACHE_DIR
-
-    //         // if [ ! -f junit.tpl ]; then
-    //         // curl -sSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/junit.tpl -o junit.tpl
-    //         // fi
-
-    //         // # 1. Console output (table)
-    //         // trivy image \
-    //         // --scanners vuln \
-    //         // --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
-    //         // --format table \
-    //         // ${image_name}:${tag_name}
-
-    //         // # 2. JUnit report (for Jenkins)
-    //         // trivy image \
-    //         // --scanners vuln \
-    //         // --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL \
-    //         // --format template \
-    //         // --template "@junit.tpl" \
-    //         // -o trivy-report.xml \
-    //         // ${image_name}:${tag_name}
-    //         // '''
-    //     }
-    // }
-
 
         stage ("Docker Image push to ECR") {
             steps {
@@ -127,8 +70,6 @@ pipeline{
             }
         }
     }
-
-
 
     post {
         always {
