@@ -10,6 +10,6 @@ stages:
           - task: Maven@4
             inputs:  
               mavenPOMFile: 'pom.xml'
-              goals:  'package'
               publishJUnitResults: true
               testresultsFiles: '**/surefire-reports/TEST-*.xml'
+              goals:  'package'
