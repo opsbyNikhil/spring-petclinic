@@ -3,7 +3,7 @@ trigger:
 pool: 'Default'
 
 stages:
-  - stage: 'build-stage'
+  - stage: 'build_stage'
     jobs:
       - job:  "maven"
         steps:
