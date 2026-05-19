@@ -8,8 +8,8 @@ stages:
       - job:  "maven"
         steps:
           - task: Maven@4
-            input:  
-            mavenPOMfile: 'pom.xml'
+            inputs:  
+            mavenPOMFile: 'pom.xml'
             goals:  'package'
             publishJUnitResults = true
             testresultsFiles: '**/surefire-reports/TEST-*.xml'
