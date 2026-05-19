@@ -12,4 +12,5 @@ stages:
               mavenPOMFile: 'pom.xml'
               publishJUnitResults: true
               testresultsFiles: '**/surefire-reports/TEST-*.xml'
-              goals:  'package'
+              goals:  'package' 
+              
