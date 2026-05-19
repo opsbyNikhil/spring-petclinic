@@ -1,0 +1,15 @@
+trigger:
+  - main:
+pool: 'Default'
+
+stages:
+  - stage: 'build-stage'
+    jobs:
+      - job:  "maven"
+        steps:
+          - task: Maven@4
+            input:  
+            mavenPOMfile: 'pom.xml'
+            goals:  'package'
+            publishJUnitResults = true
+            testresultsFiles: '**/surefire-reports/TEST-*.xml'
