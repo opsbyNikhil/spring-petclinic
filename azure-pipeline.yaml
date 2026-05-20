@@ -1,6 +1,6 @@
 trigger:
   - main
-pool: 'Default'
+pool: 'default'
 
 stages:
   - stage: 'build_stage'
@@ -10,6 +10,6 @@ stages:
           - task: Maven@4
             inputs:  
               mavenPOMFile: 'pom.xml'
+              goals:  'package'
               publishJUnitResults: true
               testresultsFiles: '**/surefire-reports/TEST-*.xml'
-              goals:  'package'
