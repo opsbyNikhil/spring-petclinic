@@ -9,8 +9,7 @@ stages:
         steps:
           - task: Maven@4
             inputs:  
-              goals:  'package -Dspring.profiles.active=h2'
-              mavenPOMFile: 'pom.xml'
               goals:  'package'
+              mavenPOMFile: 'pom.xml'
               publishJUnitResults: true
               testresultsFiles: '**/surefire-reports/TEST-*.xml'
