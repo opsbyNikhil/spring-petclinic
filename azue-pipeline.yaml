@@ -2,6 +2,7 @@ trigger:
   - main
 pool: 'default'
 
+
 stages:
   - stage: "Maven_Build"
     jobs:
