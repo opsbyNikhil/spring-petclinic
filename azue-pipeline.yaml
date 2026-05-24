@@ -11,7 +11,7 @@ stages:
       - job:  "build"
         steps:
 
-          - task: SonarQubePrepare@5
+          - task: SonarCloudPrepare@5
             displayName: Prepare Sonar Cloud Analysis
             inputs:
               SonarCloud: 'Sonar-Cloud-Token'
