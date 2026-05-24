@@ -1,6 +1,6 @@
 trigger:
   - main
-pool: 'default'
+pool: 'my-agent'
 
 stages:
   - stage: "Maven_Build"
