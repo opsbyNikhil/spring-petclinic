@@ -24,7 +24,7 @@ stages:
             displayName: Prepare maven 
             inputs:
               mavenPOMFile: 'pom.xml'
-              goals: 'package sonar:sonar'
+              goals: 'package'
               publishJUnitResults: true
               testResultsFiles: '**/surefire-reports/TEST-*.xml'
 
