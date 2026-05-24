@@ -28,15 +28,15 @@ stages:
               publishJUnitResults: true
               testResultsFiles: '**/surefire-reports/TEST-*.xml'
 
-          # - task: Maven@4
-          #   displayName: Run Sonar Cloud Analysis
-          #   inputs:
-          #     mavenPOMFile: 'pom.xml'
-          #     goals: "sonar:sonar"
-          #     options:  "-Dsonar.token=$(Sonar-Cloud-Token)
-          #                -Dsonar.projectKey=opsbyNikhil_spring-petclinic
-          #                -Dsonar.organization= opsbyNikhil"
-          #     publishJUnitResults: false
+          - task: Maven@4
+            displayName: Run Sonar Cloud Analysis
+            inputs:
+              mavenPOMFile: 'pom.xml'
+              goals: "sonar:sonar"
+              options:  "-Dsonar.token=$(Sonar-Cloud-Token)
+                         -Dsonar.projectKey=opsbyNikhil_spring-petclinic
+                         -Dsonar.organization= opsbyNikhil"
+              publishJUnitResults: false
 
           - task: SonarQubePublish@5
             inputs:
