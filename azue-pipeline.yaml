@@ -28,7 +28,7 @@ stages:
               publishJUnitResults: true
               testResultsFiles: '**/surefire-reports/TEST-*.xml'
 
-          - task: SonarQubePublish@2
+          - task: SonarCloudPublish@2
             inputs:
               pollingTimeoutSec: '300'
  
