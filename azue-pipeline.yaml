@@ -11,7 +11,7 @@ stages:
       - job:  "build"
         steps:
 
-          - task: SonarCloudPrepare@3
+          - task: SonarCloudPrepare@6
             displayName: Prepare Sonar Cloud Analysis
             inputs:
               SonarCloud: 'Sonar-Cloud-Token'
@@ -19,7 +19,6 @@ stages:
               scannerMode: 'Other'
               projectKey: 'opsbyNikhil_spring-petclinic'
               projectName: 'petclinic'
-
 
           - task: Maven@4
             displayName: Prepare maven 
@@ -29,8 +28,23 @@ stages:
               publishJUnitResults: true
               testResultsFiles: '**/surefire-reports/TEST-*.xml'
 
-          - task: SonarCloudPublish@3
+          - task: Maven@4
+            displayName: Run Sonar Cloud Analysis
+            inputs:
+              mavenPOMFile: 'pom.xml'
+              goals: "sonar:sonar"
+              options:  "-Dsonar.token=$(Sonar-Cloud-Token)
+                         -Dsonar.projectKey=opsbyNikhil_spring-petclinic
+                         -Dsonar.organization= opsbyNikhil"
+              publishJUnitResults: false
+
+          - task: SonarCloudPublish@6
             inputs:
               pollingTimeoutSec: '300'
-
  
+
+
+
+
+
+
