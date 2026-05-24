@@ -15,7 +15,7 @@ stages:
             displayName: Prepare Sonar Cloud Analysis
             inputs:
               SonarCloud: 'Sonar-Cloud-Token'
-              organisation: 'opsbyNikhil'
+              organization: 'opsbyNikhil'
               scannerMode: 'Other'
               projectKey: 'opsbyNikhil_spring-petclinic'
               projectName: 'petclinic'
