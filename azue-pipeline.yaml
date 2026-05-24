@@ -11,14 +11,6 @@ stages:
       - job:  "build"
         steps:
 
-          - task: Maven@4
-            displayName: Prepare maven 
-            inputs:
-              mavenPOMFile: 'pom.xml'
-              goals: 'package'
-              publishJUnitResults: true
-              testResultsFiles: '**/surefire-reports/TEST-*.xml'
-
           - task: SonarQubePrepare@5
             displayName: Prepare Sonar Cloud Analysis
             inputs:
@@ -27,8 +19,15 @@ stages:
               scannerMode: Other
               projectKey: opsbyNikhil_spring-petclinic
               projectName: petclinic
-          
-          
+
+          - task: Maven@4
+            displayName: Prepare maven 
+            inputs:
+              mavenPOMFile: 'pom.xml'
+              goals: 'package'
+              publishJUnitResults: true
+              testResultsFiles: '**/surefire-reports/TEST-*.xml'
+
           - task: Maven@4
             displayName: Run Sonar Cloud Analysis
             inputs:
