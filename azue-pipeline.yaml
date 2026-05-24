@@ -2,15 +2,49 @@ trigger:
   - main
 pool: 'default'
 
+variable:
+  - group: Sonar-Cloud-Token
 
 stages:
   - stage: "Maven_Build"
     jobs:
       - job:  "build"
         steps:
+
           - task: Maven@4
+            displayName: Prepare maven 
             inputs:
               mavenPOMFile: 'pom.xml'
               goals: 'package'
               publishJUnitResults: true
               testResultsFiles: '**/surefire-reports/TEST-*.xml'
+
+          - task: SonarQubePrepare@5
+            displayName: Prepare Sonar Cloud Analysis
+            inputs:
+              SonarCloud: Sonar-Cloud-Token
+              organisation: opsbyNikhil
+              scannerMode: Other
+              projectKey: opsbyNikhil_spring-petclinic
+              projectName: petclinic
+          
+          - task: Maven@4
+            displayName: Run Sonar Cloud Analysis
+            inputs:
+              mavenPOMFile: 'pom.xml'
+              goals: "sonar:sonar"
+              options:  "-Dsonar.token=$(Sonar-Cloud-Token)
+                         -Dsonar.projectKey=opsbyNikhil_spring-petclinic
+                         -Dsonar.organization= opsbyNikhil"
+              publishJUnitResults: false
+
+          - task: SonarQubePublish@5
+            inputs:
+              pollingTimeoutSec: '300'
+ 
+
+
+
+
+
+
