@@ -36,7 +36,7 @@ stages:
               goals: "sonar:sonar"
               options:  > 
                   -Dsonar.projectKey=opsbyNikhil_spring-petclinic
-                  -Dsonar.organization= opsbynikhil
+                  -Dsonar.organization=opsbynikhil
               publishJUnitResults: false
 
           - task: SonarCloudPublish@3
