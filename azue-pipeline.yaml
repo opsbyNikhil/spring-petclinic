@@ -14,11 +14,11 @@ stages:
           - task: SonarQubePrepare@5
             displayName: Prepare Sonar Cloud Analysis
             inputs:
-              SonarCloud: Sonar-Cloud-Token
-              organisation: opsbyNikhil
-              scannerMode: Other
-              projectKey: opsbyNikhil_spring-petclinic
-              projectName: petclinic
+              SonarCloud: 'Sonar-Cloud-Token'
+              organisation: 'opsbyNikhil'
+              scannerMode: 'Other'
+              projectKey: 'opsbyNikhil_spring-petclinic'
+              projectName: 'petclinic'
 
           - task: Maven@4
             displayName: Prepare maven 
