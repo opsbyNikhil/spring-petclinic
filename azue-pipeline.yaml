@@ -11,7 +11,7 @@ stages:
       - job:  "build"
         steps:
 
-          - task: SonarCloudPrepare@6
+          - task: SonarCloudPrepare@3
             displayName: Prepare Sonar Cloud Analysis
             inputs:
               SonarCloud: 'Sonar-Cloud-Token'
@@ -28,7 +28,7 @@ stages:
               publishJUnitResults: true
               testResultsFiles: '**/surefire-reports/TEST-*.xml'
 
-          - task: SonarCloudPublish@6
+          - task: SonarCloudPublish@3
             inputs:
               pollingTimeoutSec: '300'
  
