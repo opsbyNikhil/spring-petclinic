@@ -15,7 +15,7 @@ stages:
             displayName: Prepare Sonar Cloud Analysis
             inputs:
               SonarCloud: 'Sonar-Cloud-Token'
-              organization: 'opsbyNikhil'
+              organization: 'opsbynikhil'
               scannerMode: 'Other'
               projectKey: 'opsbyNikhil_spring-petclinic'
               projectName: 'petclinic'
@@ -35,7 +35,7 @@ stages:
               goals: "sonar:sonar"
               options:  "-Dsonar.token=$(Sonar-Cloud-Token)
                          -Dsonar.projectKey=opsbyNikhil_spring-petclinic
-                         -Dsonar.organization= opsbyNikhil"
+                         -Dsonar.organization= opsbynikhil"
               publishJUnitResults: false
 
           - task: SonarCloudPublish@3
