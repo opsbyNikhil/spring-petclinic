@@ -28,6 +28,7 @@ stages:
               projectKey: opsbyNikhil_spring-petclinic
               projectName: petclinic
           
+          
           - task: Maven@4
             displayName: Run Sonar Cloud Analysis
             inputs:
