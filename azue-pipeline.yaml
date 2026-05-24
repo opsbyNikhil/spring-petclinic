@@ -34,9 +34,9 @@ stages:
             inputs:
               mavenPOMFile: 'pom.xml'
               goals: "sonar:sonar"
-              # options:  "-Dsonar.token=$(Sonar-Cloud-Token)
-              #            -Dsonar.projectKey=opsbyNikhil_spring-petclinic
-              #            -Dsonar.organization= opsbynikhil"
+              options:  > 
+                  -Dsonar.projectKey=opsbyNikhil_spring-petclinic
+                  -Dsonar.organization= opsbynikhil
               publishJUnitResults: false
 
           - task: SonarCloudPublish@3
