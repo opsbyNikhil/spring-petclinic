@@ -23,4 +23,4 @@ jobs:
         -DSonar.projectKey=opsbyNikhil_spring-petclinic \
         -DSonar.organization=opsbynikhil \
         -DSonar.host.url=https://sonarcloud.io/ \
-        -DSonar.login=${{secrets.SONAR_TOKEN}}
+        -DSonar.token=${{ secrets.SONAR_TOKEN }}
