@@ -1,0 +1,19 @@
+name: GitHub-actions
+
+on:
+  push:
+    branchs: 
+      - main
+
+jobs:
+  build:
+    name: my-spc
+    runs-on: self-hosted
+
+    steps:
+      - name: gitcheckout
+        uses: actions/checkout@v6
+    
+    steps:
+      - name: maven-build
+        used: mvn package 
