@@ -20,7 +20,7 @@ jobs:
       - name: sonar-scan
         run: |
           mvn package sonar:sonar \
-          -DSonar.projectKey=opsbyNikhil_spring-petclinic \
-          -DSonar.organization=opsbynikhil \
-          -DSonar.host.url=https://sonarcloud.io/ \
-          -DSonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.projectKey=opsbyNikhil_spring-petclinic \
+          -Dsonar.organization=opsbynikhil \
+          -Dsonar.host.url=https://sonarcloud.io/ \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
