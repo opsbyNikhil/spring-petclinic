@@ -2,7 +2,7 @@ name: GitHub-actions
 
 on:
   push:
-    branchs: 
+    branchs:
       - main
 
 jobs:
@@ -13,9 +13,9 @@ jobs:
     steps:
       - name: gitcheckout
         uses: actions/checkout@v6
-    
+
       - name: maven-build
-        run: 'mvn package' 
+        run: "mvn package"
 
       - name: sonar-scan
         run: |
@@ -28,10 +28,14 @@ jobs:
       - name: AWS creddentails
         uses: aws-actions/configure-aws-credentials@v6
         with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID }}
-            aws-region: ap-south-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID }}
+          aws-region: ap-south-1
 
       - name: Upload JAR in S3 Bucket In AWS
         run: |
           aws s3 cp target/*.jar s3://spc-buck-01/
+
+      - name: Docker build image
+        run: |
+          docker image build -t spc:1.0 .
