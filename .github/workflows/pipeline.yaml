@@ -15,5 +15,5 @@ jobs:
        uses: actions/checkout@v6
 
       - name: Build-Maven
-        run: mvn package
+        run: "mvn package"
 
