@@ -37,4 +37,5 @@ jobs:
           aws s3 cp target/*.jar s3://spc-buck-01/
 
       - name: Docker Image
-        run: docker image build -t {{ secrets.DOCKER_IMAGE }}:{{ secrets.TAG }}
+        run: | 
+          docker image build -t {{ secrets.DOCKER_IMAGE }}:{{ secrets.TAG }} .
