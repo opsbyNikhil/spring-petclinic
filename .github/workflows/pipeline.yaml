@@ -45,3 +45,15 @@ jobs:
           trivy image \
           --severity HIGH,CRITICAL \
           ${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }}
+
+      - name: Docker Image push to ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_ECR_REGION }} | docker login --username ${{ secrets.AWS_ECR_USERNAME }} --password-stdin ${{ secrets.AWS_ECR_PASSWORD }}.dkr.ecr.ap-south-1.amazonaws.com
+
+      - name: Tag Image
+        run: |
+          docker tag dev/spc:latest ${{ secrets.AWS_ECR_PASSWORD }}.dkr.ecr.ap-south-1.amazonaws.com/dev/spc:latest
+
+      - name: Docker Push Image
+        run: |
+          docker push ${{ secrets.AWS_ECR_PASSWORD }}.dkr.ecr.ap-south-1.amazonaws.com/dev/spc:latest
