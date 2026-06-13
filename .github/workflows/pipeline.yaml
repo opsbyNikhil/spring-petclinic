@@ -35,4 +35,3 @@ jobs:
       - name: upload JAR in S3
         run: |
           aws cp s3 target/.*jar s3://spc-buck-01
-
