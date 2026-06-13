@@ -52,8 +52,9 @@ jobs:
 
       - name: Tag Image
         run: |
-          docker tag dev/spc:latest ${{ secrets.AWS_ECR_PASSWORD }}.dkr.ecr.ap-south-1.amazonaws.com/dev/spc:latest
+          docker tag dev/${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }} ${{ secrets.AWS_ECR_PASSWORD }}.dkr.ecr.ap-south-1.amazonaws.com/dev/${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }}
 
       - name: Docker Push Image
         run: |
-          docker push ${{ secrets.AWS_ECR_PASSWORD }}.dkr.ecr.ap-south-1.amazonaws.com/dev/spc:latest
+          docker push ${{ secrets.AWS_ECR_PASSWORD }}.dkr.ecr.ap-south-1.amazonaws.com/dev/${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }}
+
