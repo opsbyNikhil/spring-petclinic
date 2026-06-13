@@ -39,3 +39,10 @@ jobs:
       - name: Docker Image
         run: | 
           docker image build -t ${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }} .
+      
+      - name: Trivy scan
+        run: |
+          trivy image \
+          --severity HIGH, CRITICAL \
+          --exit code 1 \
+          ${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }}
