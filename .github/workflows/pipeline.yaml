@@ -52,7 +52,7 @@ jobs:
 
       - name: Tag Image
         run: |
-          docker tag dev/${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }} ${{ secrets.AWS_ECR_PASSWORD }}.dkr.ecr.ap-south-1.amazonaws.com/dev/${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }}
+          docker tag ${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }} ${{ secrets.AWS_ECR_PASSWORD }}.dkr.ecr.ap-south-1.amazonaws.com/dev/${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }}
 
       - name: Docker Push Image
         run: |
