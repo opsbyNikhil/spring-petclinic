@@ -1,11 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dpc-frontend-svc
+  name: my-svc
+  namespace: spc-dev
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     env: dev
   ports:
-    - port: 8080
+    - port: 80
       protocol: TCP
+      nodePort: 31256

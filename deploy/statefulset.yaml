@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-db
+  labels:
+    env: dev
+  namespace: spc-dev
+spec:
+  minReadySeconds: 3
+  replicas: 5
+  selector:
+    matchExpressions:
+      - key: env
+        operator: In
+        values:
+          - dev
+  serviceName: my-svc
+  template:
+    metadata:
+      name: My-db-storage
+    spec:
+      containers:
+        - image: mysql
+          name: my-db-storage
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_DATABASE
+              value: spc
+            - name: MYSQL_USER
+              value: dev-spc
+            - name: MYSQL_PASSWORD
+              value: spc@12345
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            successThreshold: 1
+            failureThreshold: 1
+            initialDelaySeconds: 3
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: my-sql-vol
+  volumeClaimTemplates:
+    - metadata:
+        name: my-sql-vol
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 2Gi

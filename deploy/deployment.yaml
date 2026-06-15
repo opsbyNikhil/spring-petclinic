@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-spc
+  namespace: spc-dev
+  labels:
+    env: dev
+  annotations:
+    kubernetes.io/change-cause: "Deploy to spc"
+spec:
+  minReadySeconds: 3
+  replicas: 3
+  selector:
+    matchExpressions:
+      - key: env
+        operator: In
+        values:
+          - dev
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: My-spc-pod
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: env
+                    operator: In
+                    values:
+                      - dev
+      containers:
+        - image: 984912521466.dkr.ecr.ap-south-1.amazonaws.com/dev/spc:1.0
+          name: my-spc
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP

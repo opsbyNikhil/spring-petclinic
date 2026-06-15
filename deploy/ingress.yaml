@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-lb
+  namespace: spc-dev
+  labels:
+    env: dev
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /spc
+            pathType: Prefix
+            backend:
+              service: 
+                name: my-spc
+                port: 
+                  number: 80
