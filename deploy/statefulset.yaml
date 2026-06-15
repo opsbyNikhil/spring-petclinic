@@ -18,6 +18,8 @@ spec:
   template:
     metadata:
       name: My-db-storage
+    labels:
+      env: dev
     spec:
       containers:
         - image: mysql
@@ -35,9 +37,8 @@ spec:
             - containerPort: 3306
               protocol: TCP
           readinessProbe:
-            httpGet:
-              path: /
-              port: 80
+            tcpSocket:
+              port: 3306
             successThreshold: 1
             failureThreshold: 1
             initialDelaySeconds: 3

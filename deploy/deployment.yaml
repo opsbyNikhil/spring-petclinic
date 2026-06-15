@@ -24,6 +24,8 @@ spec:
   template:
     metadata:
       name: My-spc-pod
+      labels:
+        env: dev
     spec:
       affinity:
         nodeAffinity:
