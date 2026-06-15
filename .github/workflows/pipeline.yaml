@@ -11,7 +11,7 @@ on:
         description: "kubernates Namespace"
         required: true
         default: "false"
-    inputs:
+        
       switch_namespace:
         description: "Switching Namespace"
         required: true
@@ -76,7 +76,7 @@ jobs:
           kubectl create namespace spc-dev
 
       - name: Kubernates switching into nameespace
-        if: ${{ github.event.inouts.switch_namespace == 'true' }}
+        if: ${{ github.event.inputs.switch_namespace == 'true' }}
         run: |
           kubectl config set-context --current --namespace=spc-dev
 
