@@ -58,6 +58,14 @@ jobs:
         run: |
           docker push ${{ secrets.AWS_ECR_PASSWORD }}.dkr.ecr.ap-south-1.amazonaws.com/dev/${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }}
 
+      - name: Kubernates namespace
+        run: |
+          kubectl create namespace spc-dev
+
+      - name: Kubernates switching into nameespace
+        run: |
+          kubectl config set-context --current --namespace=spc-dev
+
       - name: Kubernates Deploy
         run: |
           kubectl apply -f deploy/
