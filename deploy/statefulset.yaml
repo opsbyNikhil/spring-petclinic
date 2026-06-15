@@ -18,8 +18,8 @@ spec:
   template:
     metadata:
       name: My-db-storage
-    labels:
-      env: dev
+      labels:
+        env: dev
     spec:
       containers:
         - image: mysql
