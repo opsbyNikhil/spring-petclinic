@@ -29,13 +29,23 @@ jobs:
       - name: Build-Maven
         run: "mvn package"
 
-      - name: sonar scan
+      - name: Sonar Scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn sonar:sonar \
+          mvn clean verify sonar:sonar \
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.token=$SONAR_TOKEN
+
+      # - name: sonar scan
+      #   run: |
+      #     mvn sonar:sonar \
+      #     -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+      #     -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
+      #     -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+      #     -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       
       - name: Configure AWS credentails
         uses: aws-actions/configure-aws-credentials@v1
