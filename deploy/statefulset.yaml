@@ -7,7 +7,6 @@ metadata:
   namespace: spc-dev
 spec:
   minReadySeconds: 3
-  replicas: 5
   selector:
     matchExpressions:
       - key: env
@@ -41,7 +40,8 @@ spec:
               port: 3306
             successThreshold: 1
             failureThreshold: 1
-            initialDelaySeconds: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: my-sql-vol
