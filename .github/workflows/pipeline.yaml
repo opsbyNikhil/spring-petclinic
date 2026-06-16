@@ -5,17 +5,17 @@ on:
     branches:
       - main
 
-  workflow_dispatch:
-    inputs:
-      create_namespace:
-        description: "kubernates Namespace"
-        required: true
-        default: "false"
+  # workflow_dispatch:
+  #   inputs:
+  #     create_namespace:
+  #       description: "kubernates Namespace"
+  #       required: true
+  #       default: "false"
         
-      switch_namespace:
-        description: "Switching Namespace"
-        required: true
-        default: "false"
+  #     switch_namespace:
+  #       description: "Switching Namespace"
+  #       required: true
+  #       default: "false"
 
 jobs:
   build:
