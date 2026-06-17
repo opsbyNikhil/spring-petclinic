@@ -49,6 +49,7 @@ spec:
     - metadata:
         name: my-sql-vol
       spec:
+        storageClassName: my-spc-pvc-storage
         accessModes:
           - ReadWriteOnce
         resources:
