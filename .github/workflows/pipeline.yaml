@@ -38,14 +38,6 @@ jobs:
           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
           -Dsonar.token=$SONAR_TOKEN
-
-      # - name: sonar scan
-      #   run: |
-      #     mvn sonar:sonar \
-      #     -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-      #     -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
-      #     -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-      #     -Dsonar.login=${{ secrets.SONAR_TOKEN }}
       
       - name: Configure AWS credentails
         uses: aws-actions/configure-aws-credentials@v1
@@ -81,12 +73,12 @@ jobs:
           docker push ${{ secrets.AWS_ECR_PASSWORD }}.dkr.ecr.ap-south-1.amazonaws.com/dev/${{ secrets.DOCKER_IMAGE }}:${{ secrets.TAG }}
 
       - name: Kubernates namespace
-        if: ${{ github.event.inputs.create_namespace == 'true' }}
+        # if: ${{ github.event.inputs.create_namespace == 'true' }}
         run: |
           kubectl create namespace spc-dev
 
       - name: Kubernates switching into nameespace
-        if: ${{ github.event.inputs.switch_namespace == 'true' }}
+        # if: ${{ github.event.inputs.switch_namespace == 'true' }}
         run: |
           kubectl config set-context --current --namespace=spc-dev
 
