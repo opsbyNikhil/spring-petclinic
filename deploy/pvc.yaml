@@ -11,4 +11,4 @@ spec:
   resources:
     requests:
       storage: 2Gi  
-  storageClassName: "gp-2"
+  storageClassName: my-spc-pvc-storage
